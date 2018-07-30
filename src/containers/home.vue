@@ -4,7 +4,7 @@
  * @Date: 2018-06-08 21:31:55 
  * @Description: 首页入口组件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-07-30 22:33:01
+ * @Last Modified time: 2018-07-30 22:40:34
  */
 
 <style lang="scss" scoped>
@@ -33,6 +33,7 @@
         margin-right: 20px;
         float: left;
         padding: 10px;
+        cursor: pointer;
         .name {
           float: left;
           width: 100%;
@@ -63,7 +64,7 @@
       </ul>
     </div>
 
-    <!-- <el-dialog
+    <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
       width="30%"
@@ -73,7 +74,7 @@
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
-    </el-dialog> -->
+    </el-dialog>
 
   </div>  
 </template>
