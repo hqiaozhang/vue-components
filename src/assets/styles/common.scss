@@ -1,0 +1,108 @@
+
+html, body{ height:100%; }
+body {
+  font-family: "微软雅黑";
+  font-size: 0.12rem;
+  background: #eceff7;
+}
+.clearfix:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.clearfix {
+  zoom: 1 
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+ 
+.post-fixed {
+  position: fixed;
+}
+.mt5 {
+  margin-top: 5px;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.mt10{
+  margin-top: 10px;
+}
+.mt20{
+  margin-top: 20px;
+}
+
+sub, sup {
+  font-size: 9px;
+}
+sub {
+  bottom: -.25em;
+}
+.pd10 {
+  padding: 10px;
+}
+.wp100 {
+  width: 100%;
+}
+.ovh {
+  overflow: hidden;
+}
+.no-data {
+  width: 100%;
+  padding-top: 90px;
+  text-align: center;
+  color: #666;
+}
+.dn{
+  display: none;
+}
+/* 滚动条插件样式 */
+.nicescroll-rails {
+  left: auto !important;
+  right: 2px !important;
+}
+/*所有污染源下标统一使用sub*/
+sub, sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+sub {
+  font-size: 12px;
+  -webkit-transform: scale(0.7);
+  transform: scale(0.7);
+  bottom: -1px;
+  display: inline-block;
+  left: -1px;
+}
+/*隐藏百度地图logo*/
+.anchorBL{
+  display: none !important;
+}
+
+@media only screen and (max-height: 900px){
+  html {
+      font-size: 74px !important;
+  }
+}
+@media only screen and (max-height: 768px){
+  html {
+      font-size: 54px !important;
+  }
+}
+@media only screen and (max-height: 720px){
+  html {
+      font-size: 48px !important;
+  }
+}
+
+
+
+ 

@@ -1,0 +1,26 @@
+[
+    {
+        "typeName": "面积图",
+        "key": "area",
+        "child": [
+            {
+                "name": "统计面积图",
+                "key": "countChart",
+                "imgUrl": "../static/images/area/area1.png",
+                "dataUrl": ""
+            },{
+                "name": "天气预报图",
+                "key": "axesChart",
+                "imgUrl": "../static/images/area/2.png",
+                "dataUrl": ""
+            }
+        ]
+    },
+    {
+        "typeName": "柱状图",
+        "key": "bar",
+        "child": [
+            {}
+        ]		
+    }
+]
