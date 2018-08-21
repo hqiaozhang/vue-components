@@ -2,8 +2,10 @@
 logs
 *.log
 
-dist
+build/dist
 .idea
+package-lock.json
+*.tar.gz
 
 # Runtime data
 pids
