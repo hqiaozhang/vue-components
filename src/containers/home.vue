@@ -4,7 +4,7 @@
  * @Date: 2018-06-08 21:31:55 
  * @Description: 首页入口组件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-07-30 22:40:34
+ * @Last Modified time: 2018-08-21 22:39:25
  */
 
 <style lang="scss" scoped>
@@ -47,7 +47,15 @@
       
     }
   }
-  
+}
+
+.wave-chart {
+  width: 300px;
+  height: 300px;
+}
+.count-chart {
+   width: 600px;
+  height: 300px;
 }
 </style>
 
@@ -62,6 +70,13 @@
           <p class="name">{{sub.name}}</p>
         </li>
       </ul>
+      <div class="wave-chart">
+        <WaveCharts :selector="'.wave-chart'" />
+      </div>
+      <div class="count-chart">
+        <CountChart :selector="'.count-chart'" />
+      </div>
+      
     </div>
 
     <el-dialog
@@ -81,13 +96,17 @@
 
 <script>
   import chartData from '@/../static/json/charts.json'
-  console.log(chartData)
+  import { WaveCharts, CountChart } from '@/charts/index.js'
   export default {
     data() {
       return {
         dialogVisible: false,
         chartData: chartData,
       };
+    },
+    components: {
+      WaveCharts,
+      CountChart
     },
     methods: {
       handleClose(done) {
