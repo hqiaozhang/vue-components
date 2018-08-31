@@ -4,7 +4,7 @@
  * @Date: 2018-06-08 21:31:55 
  * @Description: 首页入口组件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-08-21 22:39:25
+ * @Last Modified time: 2018-08-31 18:16:55
  */
 
 <style lang="scss" scoped>
@@ -70,26 +70,13 @@
           <p class="name">{{sub.name}}</p>
         </li>
       </ul>
-      <div class="wave-chart">
-        <WaveCharts :selector="'.wave-chart'" />
-      </div>
+      <div class="iaqi-data">
+        <WaveBall :sourceData="waveData" :chartclass="'iaqi-chart'" />
+      </div>  
       <div class="count-chart">
         <CountChart :selector="'.count-chart'" />
       </div>
-      
     </div>
-
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
 
   </div>  
 </template>
@@ -97,16 +84,26 @@
 <script>
   import chartData from '@/../static/json/charts.json'
   import { WaveCharts, CountChart } from '@/charts/index.js'
+  import { WaveBall } from '@/components/index.js'
   export default {
     data() {
       return {
         dialogVisible: false,
         chartData: chartData,
+        waveData: {
+          describe: '舒适',
+          value: 127,
+          chartData: {
+            value: [[0.3, 0.3 - 0.05]],
+            level: 2
+          },
+        }
       };
     },
     components: {
       WaveCharts,
-      CountChart
+      CountChart,
+      WaveBall
     },
     methods: {
       handleClose(done) {

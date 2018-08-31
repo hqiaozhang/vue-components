@@ -22,7 +22,7 @@ module.exports = merge(common, {
   },
   mode: 'production', // 生产环境
   // 对调试源码(debug)和运行基准测试(benchmark tests)很有帮助
-  devtool: 'source-map', //
+  // devtool: 'source-map', 
   // 出口文件(js)
   output: {
     path: config.build.assetsRoot,
