@@ -4,7 +4,7 @@
  * @Date: 2018-06-08 21:31:55 
  * @Description: 首页入口组件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-03 15:40:25
+ * @Last Modified time: 2018-09-03 17:38:49
  */
 
 <style lang="scss" >
@@ -85,7 +85,10 @@
         </li>
       </ul>
     </div>
-
+    <div class="air-quality">
+      <!-- 使用d3绘制图表 -->
+      <AirQualityD3 :selector="'.air-quality'" />
+    </div>
 
     <el-dialog
       v-if="dialogVisible"

@@ -4,7 +4,7 @@
  * @Email: 991034150@qq.com
  * @Description: 入口文件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-03 15:13:57
+ * @Last Modified time: 2018-09-03 17:38:37
  */
 
 import Vue from 'vue'
@@ -19,7 +19,6 @@ import '@/assets/styles/index.scss'
 // 渲染前处理
 import preLoader from './util/loader/loader'
 import mockAPI from './api/mockIndex'
-console.log('mockAPI', mockAPI)
 
 // ========================================================
 // Mock & Config Setup

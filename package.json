@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "d3": "^3.5.17",
+    "d3": "^5.7.0",
     "echarts": "^4.1.0",
     "echarts-liquidfill": "^2.0.2",
     "element-ui": "^2.4.5",
