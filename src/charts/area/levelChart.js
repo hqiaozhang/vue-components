@@ -4,7 +4,7 @@
  * @Date: 2018-06-08 21:51:36 
  * @Description: 1-3级标准面积图
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-08-31 18:40:37
+ * @Last Modified time: 2018-09-03 15:41:07
  */
 
 import echarts from "echarts"
@@ -53,13 +53,14 @@ let colors = [
 
 
 export default {
-	template: '<div></div>',
+	template: '<div class="test"></div>',
 	data() {
 		return {
 			// 默认配置项
 			lineColor: ['#7be55a', '#fedd32', '#f6354d'],
 			lineName: ['一级标准', '二级标准', '三极标准'],
 			defaultSetting: {
+				backgroundColor: '#1a3f7f',
 				tooltip: {
 					trigger: 'axis',
 				},
@@ -240,22 +241,25 @@ export default {
 			option.series[0].data = data 
 			option.series[0].areaStyle.normal.color = fillColor // 填充色 
 			option.series = [option.series[0], ...levelSeries]
-			let xlen = self.sourceData.xAxis.length
+			let xAxis = [];
+			self.sourceData.result.map(item => {
+				xAxis.push(item.rtcTime.slice(11, 16));
+			});
+			let xlen = xAxis.length
 			// 解决最后一个为整点时不渲染问题，添加一个空数据
-			if(self.sourceData.xAxis[xlen - 1].indexOf(':00') !== -1) {
-				self.sourceData.xAxis.push('0')
+			if(xAxis[xlen - 1].indexOf(':00') !== -1) {
+				xAxis.push('0')
 			}
-			// self.sourceData.xAxis.push('0')
-			option.xAxis.data = self.sourceData.xAxis
+			// xAxis.push('0')
+			option.xAxis.data = xAxis
 			option.grid.left =  maxLen * 15
 			this.formatterTooltip()
 			self.myChart.clear()
 			self.myChart.setOption(option)
-			
 			// 监听窗口变化
-			// window.addEventListener('resize', function () {
-			// 	self.myChart.resize()
-			// })
+			window.addEventListener('resize', function () {
+				self.myChart.resize()
+			})
 		},
 		/**格式化 Tooltip*/
 		formatterTooltip() {

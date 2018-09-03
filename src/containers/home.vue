@@ -4,10 +4,10 @@
  * @Date: 2018-06-08 21:31:55 
  * @Description: 首页入口组件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-08-31 18:16:55
+ * @Last Modified time: 2018-09-03 15:40:25
  */
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .home-container {
   padding: 20px;
   float: left;
@@ -27,7 +27,7 @@
       height: 100%;
       li {
         width: 18%;
-        height: 180px;
+        height: 200px;
         background: #fff;
         box-shadow: 0 2px 5px #ccc;
         margin-right: 20px;
@@ -41,7 +41,8 @@
         }
         img {
           width: 100%;
-          height: 150px;
+          height: 160px;
+          margin-bottom: 5px;
         }
       }
       
@@ -57,62 +58,86 @@
    width: 600px;
   height: 300px;
 }
+.air-quality-layout {
+  width: 490px;
+}
+.el-dialog__body {
+  height: 460px;
+}
+.render-chart {
+  margin: 0 auto;
+  width: 90%;
+  height: 75%;
+}
+ 
 </style>
 
 <template>
   <div class="home-container">
-
-    <div class="item" v-for="item in chartData" :key="item.key">
+    <div class="item" v-for="item in chartJson" :key="item.key">
       <p class="h2-title">{{item.typeName}}</p>
       <ul class="list">
-        <li @click="dialogVisible = true" v-for="sub in item.child" :key="sub.key">
+        <li v-for="sub in item.child"
+          @click="handleChart(sub)" 
+          :key="sub.key">
           <img :src="sub.imgUrl" />
           <p class="name">{{sub.name}}</p>
         </li>
       </ul>
-      <div class="iaqi-data">
-        <WaveBall :sourceData="waveData" :chartclass="'iaqi-chart'" />
-      </div>  
-      <div class="count-chart">
-        <CountChart :selector="'.count-chart'" />
-      </div>
     </div>
 
+
+    <el-dialog
+      v-if="dialogVisible"
+      :title="title"
+      :visible.sync="dialogVisible"
+      width="45%"
+      :before-close="handleClose">
+      <div class="render-chart">
+        <component :is="which_to_show" 
+          :sourceData="sourceData"  
+          :pollution="ptype"
+          :selector="'.render-chart'" ></component> 
+      </div>
+ 
+    </el-dialog>
   </div>  
 </template>
 
 <script>
-  import chartData from '@/../static/json/charts.json'
-  import { WaveCharts, CountChart } from '@/charts/index.js'
-  import { WaveBall } from '@/components/index.js'
+  import { fetch } from '@/util/request'
+  import chartJson from '@/../static/json/charts.json'
+  import * as charts from '@/charts/index.js'
+  import * as components from '@/components/index.js'
   export default {
     data() {
       return {
+        chartJson: chartJson,
         dialogVisible: false,
-        chartData: chartData,
-        waveData: {
-          describe: '舒适',
-          value: 127,
-          chartData: {
-            value: [[0.3, 0.3 - 0.05]],
-            level: 2
-          },
-        }
+        ptype: "iaqi",
+        title: '',
+        which_to_show: '',
+        sourceData: '',
       };
     },
     components: {
-      WaveCharts,
-      CountChart,
-      WaveBall
+      ...charts,
+      ...components
     },
     methods: {
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      }
+       handleChart(item) {
+         let self = this
+         this.title = item.name
+         let dataUrl = item.dataUrl || 'fetchDefault'
+         fetch(dataUrl, data=> {
+           self.sourceData = data
+           self.dialogVisible = true
+           self.which_to_show = item.key
+         })
+       },
+       handleClose() {
+         this.dialogVisible = false
+       }
     }
   };
 </script>

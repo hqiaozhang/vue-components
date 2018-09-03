@@ -4,11 +4,12 @@
  * @Email: 991034150@qq.com
  * @Description: 所有mock 出口
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-07-30 21:55:29
+ * @Last Modified time: 2018-09-03 15:13:40
  */
 
-import featchCountChart from './area/countAreaMock'
-
+ 
+import * as areaMock from './area/index' 
+ 
 export default {
-  featchCountChart
+  ...areaMock
 }

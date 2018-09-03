@@ -1,8 +1,10 @@
 <style lang="scss" scoped>
 .wave-ball {
   position: relative;
-  float: left;
+  // float: left;
   color: #fff;
+  margin: 0 auto;
+  width: 170px;
   .value {
     position: absolute;
     z-index: 99;
@@ -40,21 +42,23 @@
 
 <script>
 import { WaveCharts } from "@/charts/index.js";
-import DigitRoll from "./digitroll.js";
+import DigitRoll from '@/assets/plugin/digitroll.js'
 export default {
   data() {
     return {
       waveData: {
         value: [[0.3, 0.3 - 0.05]],
         level: 2
-      }
+      },
+      chartclass: 'iaqi-chart'
     };
   },
   components: {
     WaveCharts
   },
   props: {
-    chartclass: String,
+    // chartclass: String,
+    selector: String,
     sourceData: Object
   },
   mounted() {

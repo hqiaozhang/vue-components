@@ -4,14 +4,14 @@
  * @Email: 991034150@qq.com
  * @Description: 项目默认全局配置项
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-07-06 17:33:34
+ * @Last Modified time: 2018-09-03 15:08:39
  */
 
 //  const search = global.location.search
 
 export default {
   // 是否使用mock模式，在mock模式下向服务器的请求被mockjs拦截
-  mock: false, // search.indexOf('mock') !== -1,
+  mock: true, // search.indexOf('mock') !== -1,
   // 是否使用proxy模式，在proxy模式下会使用proxy的url来替换原来的url
   proxy: true,
   // 模拟websocket时，消息的推送间隔(毫秒)

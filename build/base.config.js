@@ -26,7 +26,7 @@ module.exports = {
       },
     },
     // dev-server的端口号，可以自行更改
-    port: 8086,
+    port: 8085,
     devtool: 'cheap-module-eval-source-map',
     // 是否生成css，map文件，
     cssSourceMap: false

@@ -4,7 +4,7 @@
  * @Email: 991034150@qq.com
  * @Description: 入口文件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-08-31 14:10:37
+ * @Last Modified time: 2018-09-03 15:13:57
  */
 
 import Vue from 'vue'
@@ -16,18 +16,19 @@ import router from './router'
  
 import '@/assets/styles/index.scss'
 
-// // 渲染前处理
-// import preLoader from './util/loader/loader'
-// import mockAPI from './api/mockIndex'
+// 渲染前处理
+import preLoader from './util/loader/loader'
+import mockAPI from './api/mockIndex'
+console.log('mockAPI', mockAPI)
 
 // ========================================================
 // Mock & Config Setup
 // 渲染前设置配置项和mock API，config为子模块配置项
 // ========================================================
-// preLoader.load({
-//   config: {},
-//   apis: mockAPI
-// })
+preLoader.load({
+  config: {},
+  apis: mockAPI
+})
 
 Vue.use(elementUI)
 new Vue({
@@ -42,7 +43,7 @@ new Vue({
   template: '<App/>'
 })
 
-
+ 
 // ================= 启用热加载=============
 if(module.hot) {
   module.hot.accept()

@@ -4,23 +4,29 @@
         "key": "area",
         "child": [
             {
-                "name": "统计面积图",
-                "key": "countChart",
-                "imgUrl": "../static/images/area/area1.png",
-                "dataUrl": ""
+                "name": "24小时空气质量",
+                "key": "levelChart",
+                "type": 1, 
+                "imgUrl": "../static/images/area/levelChart.png",
+                "dataUrl": "fetchGet24Aqi"
             },{
-                "name": "天气预报图",
-                "key": "axesChart",
-                "imgUrl": "../static/images/area/2.png",
-                "dataUrl": ""
+                "name": "水波纹图表",
+                "key": "waveBall",
+                "imgUrl": "../static/images/area/waveChart.gif",
+                "dataUrl": "fetchInDoorAqi"
             }
         ]
     },
     {
-        "typeName": "柱状图",
-        "key": "bar",
+        "typeName": "仪表盘",
+        "key": "dashboard",
         "child": [
-            {}
+            {
+                "name": "空气质量检测",
+                "key": "airQuality",
+                "imgUrl": "../static/images/dashboard/airQualityChart.png",
+                "dataUrl": "fetchOutDoorAqi"
+            }
         ]		
     }
 ]

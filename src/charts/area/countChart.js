@@ -4,7 +4,7 @@
  * @Date: 2018-06-08 21:51:36 
  * @Description: 面积图
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-08-21 22:41:50
+ * @Last Modified time: 2018-09-03 14:42:00
  */
 
 import echarts from "echarts"
@@ -87,7 +87,7 @@ export default {
 			let self = this
 			let data = self.sourceData
 			let option = self.options
- 
+			self.myChart.clear()
 			self.myChart.setOption(option)
 			// 监听窗口变化
 			window.addEventListener('resize', function () {

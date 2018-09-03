@@ -3,7 +3,7 @@
  * @Date: 2018-04-18 11:05:26
  * @Description: 共用方法
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-07-07 22:46:49
+ * @Last Modified time: 2018-09-03 13:50:23
  */
 
 
@@ -221,115 +221,33 @@ export function getUrlParms(name){
   return unescape(r[2]);
   return null;
 }
-
-
 /**
- * 时间段判断
- * @param {string} type 时间类型
+ * 污染源类型判断
+ * @param type
+ * @returns {*}
  */
-export function judgeTimeSlot(type) {
+export function pollutantFormat(type) {
+  type = type.toUpperCase()
   switch (type) {
-    case '1':
-      return '00:00~05:00'
-    case '2':
-      return '06:00~11:00'
-    case '3':
-      return '12:00~17:00'
-    case '4':
-      return '18:00~23:00'
-    default:
-      break
-  }
-}
-
-/**
- * 站点类型判断
- * @param {string} type 
- */
-export function judgeType(type) {
-  switch (type) {
-    case '1':
-      return '微'
-    case '2':
-      return '考'
-    default:
-      break
-  }
-}
-
-export function judgeType2(type) {
-  switch (type) {
-    case '1':
-      return '微站'
-    case '2':
-      return '考核站'
-    default:
-      break
-  }
-}
-
-/**
- * 时间判断
- * @param {number} type 
- */
-export function timeTypes(type) {
-  switch (type) {
-    case 1:
-      return "小时";
-    case 2:
-      return "天";
-    case 3:
-      return "月";
-    case 4:
-      return "年";
+    case 'PM25':
+      return 'PM<sub>2.5</sub>'
+    case 'PM10':
+      return 'PM<sub>10</sub>'
+    case 'O3':
+      return 'O<sub>3</sub>'
+    case 'SO2':
+      return 'SO<sub>2</sub>'
+    case 'NO2':
+      return 'NO<sub>2</sub>'
+    case 'AQI2':
+      return 'AQI<sub>2</sub>'
+      case 'CO2':
+      return 'CO<sub>2</sub>'  
+      case 'IAQI':
+      return 'I·AQI'    
+      case "HCHO":
+        return "甲醛"
     default:
       return type
   }
 }
-
-/**
-* 关联检测点数据-等级颜色
-* @param {number} state
-*/
-export function judgState(state) {
-  switch (state) {
-    case '2':
-      return '正常'
-    case '1':
-      return '下线'
-    case '0':
-      return '休眠'
-    case '3':
-      return '未激活'
-    default:
-      return '--'
-  }
-}
-
-/**
-* 污染源类型判断
-* @param type
-* @returns {*}
-*/
-export function typeJudge(type) {
-  let self = this
-  let pollType = ["PM25", "PM10", "O3", "CO", "SO2", "NO2"] // 污染类型
-  let index = pollType.indexOf(type)
-  switch (index) {
-    case 0:
-      return '' + type.slice(0, 2) + '<sub>2.5</sub>'
-    case 1:
-      return '' + type.slice(0, 2) + '<sub>10</sub>'
-    case 2:
-      return '' + type.slice(0, 1) + '<sub>3</sub>'
-    case 3:
-      return type
-    case 4:
-      return '' + type.slice(0, 2) + '<sub>2</sub>'
-    case 5:
-      return '' + type.slice(0, 2) + '<sub>2</sub>'
-    default:
-      return type
-  }
-}
-
