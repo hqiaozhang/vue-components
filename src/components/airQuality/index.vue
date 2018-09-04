@@ -4,17 +4,25 @@
  * @Email: 991034150@qq.com 
  * @Description: 空气质量
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-03 11:31:14
+ * @Last Modified time: 2018-09-04 09:07:51
  */
 
  <style lang="scss" scoped>
+ 
 .air-quality {
   width: 100%;
   padding-left: 40px;
   margin-top: 25px;
+  background: #1c4284;
+  color: #fff;
+  padding: 50px 50px 90px 50px;
+  font-size: 14px;
   .chart-wrap {
     position: relative;
-    width: 100%;
+    // width: 100%;
+    width: 375px;
+    left: 50%;
+    transform: translateX(-50%);
     height: 145px;
     .level {
       height: 30px;
@@ -80,7 +88,7 @@
     top: -22px;
     width: 375px;
     height: 310px;
-    left: 38px;
+    left: 1px;
   }
   .scale-value {
     span {

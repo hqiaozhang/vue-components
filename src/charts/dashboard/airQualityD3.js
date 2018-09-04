@@ -4,7 +4,7 @@
  * @Date: 2018-06-08 21:51:36 
  * @Description: 面积图
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-03 18:20:33
+ * @Last Modified time: 2018-09-04 08:47:58
  */
 
 import { select } from "d3";
@@ -86,12 +86,12 @@ export default {
         .attr('stroke-dashoffset', '416.314px')
         .attr('d', 'M 6.5,150 A 137 137 0 0 1 293.5,150')
         .attr('stroke-linecap', 'round')
-        .attr('opction', 0)
-        .attr('stroke-dasharray', 433.2)
+        // .attr('opacity', 0.5)
+        .attr('stroke-dasharray', 433.1)
         .transition()
         .duration(2000)
-        .attr('stroke-dasharray', 800)
-        .attr('opction', 1)
+        .attr('stroke-dasharray', 433)
+        .attr('opacity', 1)
     },
 
 		/*

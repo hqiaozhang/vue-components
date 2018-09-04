@@ -2,9 +2,9 @@
  * @Author: zhanghongqia 
  * @email: 991034150@qq.com 
  * @Date: 2018-06-08 21:51:36 
- * @Description: 面积图
+ * @Description: 空气质量图表（仪表盘）
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-03 11:20:48
+ * @Last Modified time: 2018-09-04 12:00:56
  */
 
 import echarts from "echarts"
@@ -112,6 +112,9 @@ export default {
     sourceData: Object,
     option: Object, // 配置项
   },
+  /**
+   * @description el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子
+   */
   mounted() {
     this.options = merge({}, this.defaultSetting, this.option)
     // 初始化图表
@@ -119,9 +122,9 @@ export default {
     this.initChart()
   },
   methods: {
-		/*
-		* 初始化图表 
-		*/
+    /**
+     * @description 初始化图表
+     */
     initChart() {
       let self = this
       let option = self.options
@@ -133,9 +136,9 @@ export default {
       var angleValue = 0;
       if (value<=200) {
         angleValue = (500*4/6)/200 * value;
-      } if (value>200 && value<=300) {
+      } if (value>200 && value <= 300) {
         angleValue = (value-200)/100*(500/6)+500*4/6;
-      } if (value>300 && value<=500) {
+      } if (value>300 && value <= 500) {
         angleValue = (value-300)/200*(500/6)+500*5/6;
       } if (value>500) {
         angleValue = 500;
@@ -158,8 +161,9 @@ export default {
       option.series[0].lineStyle.normal.color = gradient
       option.series[1].data = [[9.6, angleValue]]
       option.visualMap.color = [colorLevel[level - 1]]
-      option.series[1].animationDelay = level * 100 + 500
- 
+      // 小圆点动画
+      option.series[1].animationDelay = level * 100 + 450
+      self.myChart.clear()
       self.myChart.setOption(option)
     },
 

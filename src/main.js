@@ -4,7 +4,7 @@
  * @Email: 991034150@qq.com
  * @Description: 入口文件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-03 17:38:37
+ * @Last Modified time: 2018-09-04 13:33:22
  */
 
 import Vue from 'vue'
@@ -12,7 +12,6 @@ import elementUI from 'element-ui'
 import App from './containers/App.vue'
 import router from './router'
 // import store from './store'
-// import $ from 'jquery'
  
 import '@/assets/styles/index.scss'
 
