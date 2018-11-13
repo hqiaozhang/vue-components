@@ -4,7 +4,7 @@
  * @Date: 2018-06-08 21:31:55 
  * @Description: 首页入口组件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-04 12:46:20
+ * @Last Modified time: 2018-11-13 09:47:38
  */
 
 <style lang="scss" >
@@ -95,6 +95,7 @@
       <div class="render-chart">
         <component :is="which_to_show"
           :sourceData="sourceData"
+          :defaultArea="defaultArea"
           :pollution="ptype"
           :selector="'.render-chart'">
         </component>
@@ -117,7 +118,19 @@ export default {
       ptype: "iaqi",
       title: "",
       which_to_show: "",
-      sourceData: ""
+      sourceData: "",
+      defaultArea: {
+        "address":"太平桥大街",
+        "cityName":"北京市",
+        "city":110100,
+        "build":"政协办公楼",
+        "proName":"北京",
+        "pro":110000,
+        "disName":"西城区",
+        "dis":110102,
+        "addressId":"110102001",
+        "moId": "12"
+      }
     };
   },
   components: { 

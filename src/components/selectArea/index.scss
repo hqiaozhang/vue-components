@@ -1,0 +1,125 @@
+ 
+.none {
+    display: none
+}
+
+ 
+
+.area-contain{
+    color: #fff;
+    background: #1faabd;
+    padding: 10px;
+    float: left;
+}
+.area-content {
+    float: left;
+    background: #fff;
+    color: #000;
+    font-size: 12px;
+    width: 100%;
+    border-radius: 0 0 5px 5px;
+}
+ 
+.area-main {
+    width: 361px;
+    display: inline-block;
+    margin-top: 10px;
+}
+ 
+.area-top{
+    float: left;
+    width: 100%;
+}
+.show-area {
+    height: 0.24rem;
+    line-height: 0.24rem;
+    // text-align: center;
+    .area-top-item {
+        display: inline-block;
+        padding: 0 4px;
+    }
+    &::before {
+        content: "";
+        width: 0.24rem;
+        height: 0.24rem;
+        background: url("./images/location.png") no-repeat;
+        background-size: 100% 100%;
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+ 
+.area-top2 {
+    border-bottom: 1px solid #ccc;
+    background: #2A4282;
+    border-radius: 5px 5px 0 0;
+    font-size: 12px;
+    color: #fff;
+     
+}
+.area-top2 .area_top_active {
+    background: #fff;
+    color: #46A4FF;
+}
+.area-top2 .area-top-item{ 
+    display: inline-block;
+    padding: 8px 22px;
+    border-left: 1px solid #535f89;
+    border-bottom: 1px solid transparent;
+    text-align: center;
+    outline: 0;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 12px;
+    margin-bottom: -1px;
+    float: left;
+}
+.area-top2 .area-top-item:first-child{
+    border-left: none;
+}
+.area-top2 .area-top-item:last-child {
+    border-radius: 0 5px 0 0;
+    border-left: none;
+}
+.area-top-item{
+    cursor: pointer;
+}
+.area_top_active{
+    color: #26a2ff;
+    border-bottom: 1px solid #26a2ff;
+}
+.area-top2 .area_top_active:first-child {
+    border-radius: 5px 0 0 0;
+}
+.area-data{
+    width: 100%;
+    padding: 12px 5px;
+    box-sizing: border-box;
+   
+    float: left;
+    &.floor,
+    &.county {
+        li {
+            width: 100%;
+            line-height: 2;
+            text-align: left;
+        }
+    }
+}
+.area-data-item{
+    display: inline-block;
+    padding: 0 10px;
+    outline: 0;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: 2px;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 12px;
+    float: left;
+}
+.red{
+    color: #26a2ff;
+}
+ 

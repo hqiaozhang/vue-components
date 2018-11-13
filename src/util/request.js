@@ -4,7 +4,7 @@
  * @Email: 991034150@qq.com
  * @Description: 发送请求的方法集合
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-07-06 15:31:26
+ * @Last Modified time: 2018-09-06 15:15:53
  */
 
 import axios from 'axios'
@@ -98,4 +98,36 @@ export function fetch (apiName, data = {}, callback) {
       // 返回回调函数
       callback && callback(response.data.result)
     })
+}
+
+
+/**
+ *  建立websocket链接
+ *  @param    {string}   apiName api名称
+ *  @param    {Object=}   data    请求参数（可选）
+ *  @param    {Function} cb      处理推送数据的回调
+ *  @return   {Websocket}   websocket实例
+ */
+export function fetchSocket(url, cb) {
+  // if (arguments.length === 2 && isFunction(data)) {
+  //   // 只传了2个参数，并且第2个参数是函数，说明第二个参数是cb
+  //   cb = data
+  //   data = {}
+  // }
+  // 不需要mock，创建真实的websocket
+  const ws = new WebSocket(url)
+  ws.onmessage = cb
+  ws.onclose = function () {
+    // console.log('连接已关闭！')
+    this.close()
+  }
+  // 当页面被卸载时，需要断开websocket
+  window.addEventListener(
+    'unload',
+    function close() {
+      window.removeEventListener('unload', close)
+      ws.close()
+    }
+  )
+  return ws
 }

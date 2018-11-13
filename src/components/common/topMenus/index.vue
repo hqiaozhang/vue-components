@@ -4,7 +4,7 @@
  * @Date: 2018-07-28 21:02:21 
  * @Description: 顶部导航
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-07-28 22:33:03
+ * @Last Modified time: 2018-11-13 09:46:29
  */
 
 <style lang="scss" scoped>
@@ -17,6 +17,8 @@
     background: linear-gradient(90deg,#1faabd,#31d69c);
     padding-left: 10px;
     float: left;
+    position: fixed;
+    z-index: 1;
     .logo {
       background: url('./images/logo.png') no-repeat;
       background-size: 100% 100%;

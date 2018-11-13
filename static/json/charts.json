@@ -28,5 +28,16 @@
                 "dataUrl": "fetchOutDoorAqi"
             }
         ]		
+    }, {
+        "typeName": "其他",
+        "key": "other",
+        "child": [
+            {
+                "name": "地区选择",
+                "key": "SelectArea",
+                "imgUrl": "../static/images/other/selectArea.png",
+                "dataUrl": "fetchAreaList"
+            }
+        ]	
     }
 ]

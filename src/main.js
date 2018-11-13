@@ -4,14 +4,14 @@
  * @Email: 991034150@qq.com
  * @Description: 入口文件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-04 13:33:22
+ * @Last Modified time: 2018-11-13 09:30:13
  */
 
 import Vue from 'vue'
 import elementUI from 'element-ui'
 import App from './containers/App.vue'
 import router from './router'
-// import store from './store'
+import store from './store'
  
 import '@/assets/styles/index.scss'
 
@@ -36,7 +36,7 @@ new Vue({
   /* 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件store,
    * 子组件使用方式 this.$store.state.count
    */
-  // store,
+  store,
   components: { App },
   template: '<App/>'
 })

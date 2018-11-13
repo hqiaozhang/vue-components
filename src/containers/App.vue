@@ -4,7 +4,7 @@
  * @Date: 2018-06-10 18:27:03 
  * @Description: 应用程序模板入口
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-07-28 22:01:53
+ * @Last Modified time: 2018-11-13 09:47:29
  */
 
  <style lang="scss" scoped>
@@ -13,6 +13,7 @@
    
     width: calc(100% - 120px);
     float: left;
+    margin: 40px 0 0 120px;
   }
  </style>
  
