@@ -4,7 +4,7 @@
  * @Date: 2018-06-08 21:31:55 
  * @Description: 首页入口组件
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-03 17:38:49
+ * @Last Modified time: 2019-03-14 06:57:51
  */
 
 <style lang="scss" >
@@ -74,6 +74,7 @@
 
 <template>
   <div class="home-container">
+    <TimeChart />
     <div class="item" v-for="item in chartJson" :key="item.key">
       <p class="h2-title">{{item.typeName}}</p>
       <ul class="list">
@@ -87,7 +88,7 @@
     </div>
     <div class="air-quality">
       <!-- 使用d3绘制图表 -->
-      <AirQualityD3 :selector="'.air-quality'" />
+      <!-- <AirQualityD3 :selector="'.air-quality'" /> -->
     </div>
 
     <el-dialog
@@ -104,6 +105,7 @@
       </div>
  
     </el-dialog>
+    
   </div>  
 </template>
 
@@ -112,6 +114,7 @@
   import chartJson from '@/../static/json/charts.json'
   import * as charts from '@/charts/index.js'
   import * as components from '@/components/index.js'
+  import { TimeChart } from '@/charts'
   export default {
     data() {
       return {
@@ -125,7 +128,8 @@
     },
     components: {
       ...charts,
-      ...components
+      ...components,
+      TimeChart
     },
     methods: {
        handleChart(item) {

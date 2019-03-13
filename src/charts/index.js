@@ -2,7 +2,7 @@ import WaveCharts from './area/waveChart'
 import CountChart from './area/countChart'
 import AirQualityChart from './dashboard/airQualityChart'
 import LevelChart from './area/levelChart'
-import AirQualityD3 from './dashboard/airQualityD3'
+// import AirQualityD3 from './dashboard/airQualityD3'
 import TimeChart from './area/timeChart'
 
 export {
@@ -10,6 +10,6 @@ export {
   CountChart,
   AirQualityChart,
   LevelChart,
-  AirQualityD3,
+  // AirQualityD3,
   TimeChart
 }
