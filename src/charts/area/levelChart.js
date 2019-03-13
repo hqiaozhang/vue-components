@@ -4,53 +4,14 @@
  * @Date: 2018-06-08 21:51:36 
  * @Description: 1-3级标准面积图
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-03 15:41:07
+ * @Last Modified time: 2019-03-13 12:00:15
  */
 
 import echarts from "echarts"
 import { merge } from "lodash"
 import {pollutantFormat} from "@/util/util.js"
  
-let colors = [
-	new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-		offset: 1,
-		color: 'rgba(123, 229, 90, 0.9)' // 绿
-	}, {
-		offset: 0,
-		color: 'rgba(123, 229, 90, 0.9)' // 绿
-	}]),
-	// 大于二级标准
-	new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-		offset: 1,
-		color: 'rgba(123, 229, 90, 0.9)' // 绿
-	}, {
-		offset: 0,
-		color: 'rgba(254, 221, 50, 0.9)' // 黄
-	}]),
-	// 大于三级标准
-	new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-		offset: 1,
-		color: 'rgba(123, 229, 90, 0.9)' // 绿
-	}, {
-		offset: 0.5,
-		color: 'rgba(254, 221, 50, 0.9)' // 黄
-	},{
-		offset: 0,
-		color: 'rgba(249, 49, 72, 0.9)' // 红
-	}]),
-	// 大于三级标准
-	new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-		offset: 1,
-		color: 'rgba(123, 229, 90, 0.9)' // 绿
-	}, {
-		offset: 0.3,
-		color: 'rgba(254, 221, 50, 0.9)' // 黄
-	},{
-		offset: 0.2,
-		color: 'rgba(249, 49, 72, 0.9)' // 红
-	}]),
-]
-
+ 
 
 export default {
 	template: '<div class="test"></div>',
@@ -178,39 +139,84 @@ export default {
 				maxData.push(max_y)
 			}
 			let max = Math.max(...yData)
-			let fillColor = colors[0]
-			// 24小时数据最大值大于该污染物的一极标准，小于二极标准
-			if(max > level_1 && max < level_2) {
-				fillColor = colors[0]
-				levesData = [level1Data, level2Data]
-				yData.push(level_1, level_2)
-			}
-			// 24小时数据最大值小于等于该污染物的二极标准 
-			if(max <= level_2) {
-				fillColor = colors[1]
-				levesData = [level1Data, level2Data]
-				yData.push(level_1, level_2)
-			}
-			// 24小时数据最大值大于该污染物的二极标准，小于等于三极标准
-			if(max > level_2 && max <= level_3) {
-				fillColor = colors[2]
-				// 填充占比计算
-				fillColor.colorStops[1].offset = 1 - level_2 / max
-				levesData = [level1Data, level2Data, level3Data]
-				yData.push(level_1, level_2)
-			}
-			// 24小时数据最大值大于该污染物的三极标准，小于最大值
-			if(max > level_3 && max < max_y) {
-				fillColor = colors[3]
-				levesData = [level1Data, level2Data, level3Data]
-				yData.push(level_1, level_2, level_3)
-			}
-			// 24小时数据最大值大于该污染物的最大值
-			if(max > max_y) {
-				fillColor = colors[3]
-				levesData = [level1Data, level2Data, level3Data]
-				yData.push(level_1, level_2, level_3, max_y, maxData)
-			}
+			let fillColor = new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+        offset: 1,
+        color: '#7be55a' // 绿
+      }, {
+        offset: 0,
+        color: '#7be55a' // 绿
+      }])
+      // 24小时数据最大值大于该污染物的一极标准，小于二极标准
+      if (max > level_1 && max < level_2) {
+        let colorsArray = [{
+          offset: 0,
+          color: '#7be55a' // 绿
+        }, {
+          offset: 1,
+          color: '#FFDF02' // 黄
+        }]
+        fillColor = new echarts.graphic.LinearGradient(0, 1, 0, 0, colorsArray)
+        levesData = [level1Data, level2Data]
+        yData.push(level_1, level_2)
+      }
+      // 24小时数据最大值大于该污染物的二极标准，小于等于三极标准
+      if (max >= level_2 && max < level_3) {
+        let colorsArray = [{
+          offset: 0,
+          color: '#7be55a' // 绿
+        },{
+          offset: level_2 / max,
+          color: '#FFDF02' // 黄
+        },{
+          offset: 1,
+          color: '#f93232' // 红
+        }]
+        fillColor = new echarts.graphic.LinearGradient(0, 1, 0, 0, colorsArray)
+        levesData = [level1Data, level2Data, level3Data]
+        yData.push(level_1, level_2)
+      }
+      // 24小时数据最大值大于该污染物的三极标准，小于最大值
+      if (max >= level_3 && max < max_y) {
+        let colorsArray = [{
+          offset: 0,
+          color: '#7be55a' // 绿
+        }, {
+          offset: level_2 / max,
+          color: '#FFDF02' // 黄
+        }, {
+          offset: level_3 / max,
+          color: '#f93232' // 红
+        }, {
+          offset: 1,
+          color: '#f93232' // 红
+        }]
+        fillColor = new echarts.graphic.LinearGradient(0, 1, 0, 0, colorsArray)
+        levesData = [level1Data, level2Data, level3Data]
+        yData.push(level_1, level_2, level_3)
+      }
+      // 24小时数据最大值大于该污染物的最大值(为0没有数据，展示3条线)
+      if (max > max_y || max === 0) {
+        if(max === 0) {
+          max = max_y
+        }
+       
+        let colorsArray = [{
+          offset: 0,
+          color: '#7be55a' // 绿
+        }, {
+          offset: level_2 / max,
+          color: '#FFDF02' // 黄
+        }, {
+          offset: level_3 / max,
+          color: '#f93232' // 红
+        }, {
+          offset: 1,
+          color: '#f93232' // 红
+        }]
+        fillColor = new echarts.graphic.LinearGradient(0, 1, 0, 0, colorsArray)
+        levesData = [level1Data, level2Data, level3Data]
+        yData.push(level_1, level_2, level_3, max_y, maxData)
+      }
 			const { lineColor,  lineName}  = this
 			// 标准线
 			let levelSeries = levesData.map((item, index) => {

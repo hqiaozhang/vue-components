@@ -4,10 +4,10 @@
  * @Date: 2018-06-08 21:51:36 
  * @Description: 面积图
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2018-09-03 18:20:33
+ * @Last Modified time: 2019-03-13 12:41:22
  */
 
-import { select } from "d3";
+import d3 from "d3";
 import { merge } from "lodash"
  
  /* <svg :width='options.width' :height='options.height' >
@@ -50,7 +50,7 @@ export default {
 
     initSvg() {
       const { width, height } = this.options
-      this.svg = select(this.$el)
+      this.svg = d3.select(this.$el)
         .append('svg')
         .attr('width', width)
         .attr('height', height)
