@@ -74,7 +74,16 @@
 
 <template>
   <div class="home-container">
-    <TimeChart />
+    <svg>
+      <defs>
+         <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style="stop-color: #F93148; stop-opacity: 1"/>
+          <stop offset="0.5" style="stop-color: #FFDF02; stop-opacity: 1"/>
+          <stop offset="1" style="stop-color: #77E750; stop-opacity: 1"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <TimeChart :sourceData="areaData" />
     <div class="item" v-for="item in chartJson" :key="item.key">
       <p class="h2-title">{{item.typeName}}</p>
       <ul class="list">
@@ -124,6 +133,7 @@
         title: '',
         which_to_show: '',
         sourceData: '',
+        areaData: []
       };
     },
     components: {
@@ -131,7 +141,16 @@
       ...components,
       TimeChart
     },
+    mounted() {
+      this.requetData()
+    },
     methods: {
+      requetData() {
+        fetch('fetchLine', data => {
+         
+          this.areaData = data
+        })
+      },
        handleChart(item) {
          let self = this
          this.title = item.name

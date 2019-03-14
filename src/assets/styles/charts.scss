@@ -1,0 +1,26 @@
+
+ .axis text {
+    font-size: 14px;
+    stroke: none;
+    fill: #222;
+}
+// 轴线
+ .grid-line path, 
+ .grid-line line {
+    fill: none;
+    stroke: #285c81;
+    opacity: 0.5;
+}
+.axis path, 
+.axis line {
+    fill: none;
+    stroke: none;
+}
+.axis-x path, 
+.axis-y path {
+    stroke: #285c81;
+    shape-rendering: optimizeSpeed;
+}
+.mark {
+  cursor: pointer;
+}

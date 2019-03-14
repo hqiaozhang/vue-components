@@ -1,12 +1,14 @@
 
 import d3 from 'd3';
 import _ from 'lodash'
-const data = [99, 71, 78, 25, 36, 92];
+import { genSVGDocID } from '@/util/util' 
 export default {
   name: 'time-chart',
   template: '<div class="time-chart"></div>',
   data() {
     return {
+       // g元素id
+     gId: genSVGDocID(),
       defaultSetting: {
         width: 700,
         height: 300,
@@ -57,13 +59,13 @@ export default {
         },
         topMark: {
           show: true,
-          radius: 4,
-          fill: '#fff',
-          stroke: ['#3ee57a', '#8b3cc4'],
-          strokeWidth: 1
+          radius: 7,
+          fill: '#A5AAB2',
+          stroke: ['#fff', '#8b3cc4'],
+          strokeWidth: 2
         },
         topText: {
-          show: true,
+          show: false,
           fill: ['#fff', '#fff'],
           fontSize: 16,
           textAnchor: 'middle'
@@ -74,7 +76,7 @@ export default {
             show: true // 轴线
           },
           gridLine: {
-            show: true // 网格线
+            show: false // 网格线
           },
           ticks: 5 // 刻度  
         },
@@ -83,7 +85,7 @@ export default {
             show: true
           },
           gridLine: {
-            show: true // 网格线
+            show: false // 网格线
           }
         },
         xText: {
@@ -96,11 +98,12 @@ export default {
     }
   },
   props: {
-    opt: Object
+    opt: Object,
+    sourceData: Array
   },
   mounted() {
     this.initCharts()
-    this.addAxisEle()
+     this.addAxisEle()
     // const x = d3.scaleLinear().range([0, 430]);
     // const y = d3.scaleLinear().range([210, 0]);
     // d3.axisLeft().scale(x);
@@ -124,15 +127,48 @@ export default {
       this.svg = d3.select(this.$el).append('svg')
         .attr('width', width)
         .attr('height', height)
+      const svg = this.svg
 
+      // 创建defs元素  
+    const defs = svg.append('defs')    
+
+     
+      // 创建line-path g元素
+      this.lineGroup = svg.append('g')
+        .attr('class', `line-group-${this.gId}`)
+      // 创建area-path g元素  
+      this.areaGroup = svg.append('g')
+        .attr('class', `area-group-${this.gId}`)
+      // 是否显示标记点
+      this.isShowMark = topMark.show
+      if(this.isShowMark) {
+        // 创建mark g元素
+        this.markGroup = svg.append('g')
+          .attr('class', `mark-group-${this.gId}`) 
+      }
+      // 是否显示标记点 
+      this.isShowTopText = topText.show 
+      if(this.isShowTopText) {
+        // 创建text g元素
+        this.textGroup = svg.append('g')
+          .attr('class', `text-group-${this.gId}`)
+      }   
+      
       // x轴比例尺
-      this.xScale = null
+      this.xScale = null  
       // y轴比例尺
-      this.yScale = null
+      this.yScale = null  
       // 线条生成器
       this.linePath = null
       // 区域生成器
       this.linePath = null
+      // 获取滤镜配置项 
+      const { pathStyle } = itemStyle
+      let cfg = []
+      let patterns = []
+    },
+    renderDefs() {
+      
     },
     // 添加轴线
     addAxisEle() {
@@ -168,6 +204,8 @@ export default {
 
       // x轴比例尺
       this.xScale = null
+
+      this.renderAxis(this.sourceData)
     },
     /**
    *  渲染
@@ -184,9 +222,10 @@ export default {
     renderAxis(data) {
       const self = this
       const { width, height, yHeight, itemStyle } = self.config
+      
       // 判断数据是否为空
       if (!data || !data.length) {
-        isNoData(self.svg, { width, height })
+        
         return false
       }
       self.config.dataLen = data.length
@@ -202,11 +241,11 @@ export default {
       // 获取所有value
       let dataset = [...tongbiData, ...huanbiData]
       // 同比环比取出来
-      let newData = [tongbiData, huanbiData]
+      let newData = [tongbiData]
       // 渲染x轴
-      self.xScale = self.addAxis.renderXAxis(data)
+      self.xScale = self.renderXAxis(data)
       // 渲染y轴  
-      self.yScale = self.addAxis.renderYAxis(dataset)
+      self.yScale = self.renderYAxis(dataset)
 
       // 线条生成器
       self.linePath = d3.svg.line()
@@ -235,6 +274,205 @@ export default {
         }
       }
     },
+    /**
+   *  渲染线条path
+   *  @param    {array}   data 数据
+   *  @param    {number}  i    下标
+   *  @return   {void}
+   */
+  renderLinePath(data, i) {
+    const self = this
+    // 创建line-path g元素
+    const lineGroup = this.lineGroup
+      .call(::self.setGroupAttribute)  
+
+    // 创建path元素
+    let linePath = lineGroup.selectAll(`.line-path-${i}`)
+    if(linePath.node()) {
+      lineGroup.select(`.line-path-${i}`)
+        .call(::self.setLinePathAttribute, data, i)    
+    } else{
+      lineGroup.append('path')
+        .call(::self.setLinePathAttribute, data, i)  
+    }
+  },
+
+  /**
+   *  设置线条path属性
+   *  @param    {array}  path   path元素
+   *  @param    {array}  data   数据
+   *  @param    {number}  i     下标
+   *  @return   {void}
+   */
+  setLinePathAttribute(path, data, i) {
+    const self = this
+    const { dur, itemStyle } = self.config
+    const { pathStyle } = itemStyle
+    path.attr('class', `line-path-${i}`)
+      .attr('fill', 'none')
+      .attr('stroke', pathStyle[i].linePath.stroke)
+      .attr('stroke-width', pathStyle[i].linePath.strokeWidth)
+      .attr('filter', `url(#${self.filterId})`)
+      .attr('d', self.linePath(self.nullData))
+      .transition()
+      .duration(dur)
+      .attr('d', self.linePath(data))
+  },
+
+  /**
+   *  渲染区域path
+   *  @param    {array}   data 数据
+   *  @param    {number}  i    下标
+   *  @return   {void}
+   */
+  renderAreaPath(data, i) {
+    const self = this
+    // line-path g元素
+    const areaGroup = this.areaGroup
+      .call(::self.setGroupAttribute)  
+    // 创建path元素
+    let areaPath = areaGroup.selectAll(`.area-path-${i}`)
+    if(areaPath.node()) {
+      areaGroup.select(`.area-path-${i}`)
+        .call(::self.setAreaPathAttribute, data, i)    
+    } else{
+      areaGroup.append('path')
+        .call(::self.setAreaPathAttribute, data, i)  
+    }
+  },
+
+  /**
+   *  设置区域path属性
+   *  @param    {array}  path   path元素
+   *  @param    {array}  data   数据
+   *  @param    {number}  i     下标
+   *  @return   {void}
+   */
+  setAreaPathAttribute(path, data, i) {
+    const self = this
+    const { dur, itemStyle } = self.config
+    path.attr('class', `area-path-${i}`)
+      // .attr('fill', '#3ee57a')
+      .attr('fill', 'url(#gradient1)')
+      .attr('stroke', 'none')
+      .attr('d', self.areaPath(self.nullData))
+      .transition()
+      .duration(dur)
+      .attr('d', self.areaPath(data)) 
+  },
+
+  /**
+   *  渲染文字数据
+   *  @param    {array}   data 数据
+   *  @param    {number}  i    下标
+   *  @return   {void}
+   */
+  renderTextData(data, i) {
+    const self = this
+    // text g元素
+    const textGroup = this.textGroup
+      .call(::self.setGroupAttribute)  
+
+    // 获取并处理update部分
+    let update = textGroup.selectAll(`.text-${i}`)
+      .data(data)
+      .call(::self.setTextDataAttribute, i)  
+    // 获取并处理enter部分
+    update.enter()
+      .append('text')
+      .call(::self.setTextDataAttribute, i)  
+    // 获取并处理exit部分  
+    update.exit().remove()  
+  },
+
+  /**
+   *  设置文字属性
+   *  @param    {array}   text text元素
+   *  @param    {number}  i    下标
+   *  @return   {void}
+   */
+  setTextDataAttribute(text, i) {
+    const self = this
+    const { topText, dur, yHeight } = self.config
+    text.attr('class', `text-${i}`)
+      .attr('font-size', topText.fontSize)
+      .attr('fill', topText.fill[i])
+      .attr('text-anchor', topText.textAnchor)
+      .attr('x', (d, j) => self.xScale(j))
+      .attr('y', yHeight)
+      .transition()
+      .duration(dur)
+      .attr('y', (d) => self.yScale(d) - 10)
+      .text((d) => d)
+  },
+
+  /**
+   *  渲染顶部小圆点
+   *  @example: [example]
+   *  @param    {[type]}  data [description]
+   *  @param    {[type]}  i    [description]
+   *  @return   {void}
+   */
+  renderTopMark(data, i) {
+    const self = this
+    // mark g元素
+    let markGroup = this.markGroup
+      .call(::self.setGroupAttribute)  
+ 
+    // 获取并处理update部分
+    let update = markGroup.selectAll(`.mark-${i}`)
+      .data(data)
+      .call(::self.setMarkAttribute, i)  
+      
+    // 获取并处理enter部分
+    update.enter()
+      .append('circle')
+    
+      .call(::self.setMarkAttribute, i)  
+      .on('click', () =>  {
+        console.log('xxxxx')
+      })
+    // 获取并处理exit部分  
+    update.exit().remove()  
+  },
+
+  /**
+   *  设置圆点属性
+   *  @param    {array}   circle  circle元素
+   *  @param    {number}  i       下标
+   *  @return   {void}
+   */
+  setMarkAttribute(circle, i) {
+    const self = this
+    const { topMark, yHeight, dur } = self.config
+    circle.attr('class', `mark-${i} mark`)
+      .attr('r', topMark.radius)
+      .attr('fill', topMark.fill)
+      .attr('stroke', topMark.stroke[i])
+      .attr('stroke-width', topMark.strokeWidth)
+      .attr('cx', (d, j) => {
+        if(j == this.sourceData.length - 1) {
+          return self.xScale(j + 1)
+        }
+        return (self.xScale(j) + self.xScale(j+1)) / 2
+      })
+      .attr('cy', yHeight)
+      // .transition()
+      // .duration(dur)
+      // .attr('cy', (d) => self.yScale(d))
+  },
+
+  /**
+   *  设置g元素属性
+   *  @param    {array}  g  g元素
+   *  @return   {void}
+   */
+  setGroupAttribute(g) {
+    const { yAxis, itemStyle } = this.config
+    const { top, left } = itemStyle.margin
+    g.attr('transform', `translate(${yAxis.left + left}, ${top})`)
+  },
+
     /**
    *  渲染x轴
    *  @param    {array}     data 图表数据
@@ -391,6 +629,11 @@ export default {
       g.attr('class', 'grid-line grid-line-y')
         .attr('transform', `translate(${yAxis.left}, ${top})`)
         .call(grid)
+    }
+  },
+  watch: {
+    sourceData: function() {
+      this.renderAxis(this.sourceData)
     }
   }
 };

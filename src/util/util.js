@@ -8,6 +8,20 @@
 
 
 /**
+ * 随机生成svg defs中元素的ID
+ * 
+ * @return 随机生成的ID
+ */
+export const genSVGDocID = ( () => {
+  let id = 1
+  return () => {
+    let prefix = new Date().valueOf()
+    return `wmfe-${prefix}-${id++}`
+  }
+})()
+
+
+/**
  *  获取某个范围的随机数
  *  @param    {number}  min 最大值
  *  @param    {number}  max 最小值
